@@ -2,14 +2,16 @@ var http = require('http')
 var fs = require('fs')
 
 const PORT = 8888
-var res_json = fs.readFileSync('./response.json')
+const delay_ms = 5000
+var res_json = fs.readFileSync('./response_459.json')
 
 console.log(`starting server on ${PORT}`)
 
 http.createServer(function (request, response) {
+  console.log(`${new Date().toISOString()} started on delay of ${delay_ms}`)
   setTimeout(() => {
-    response.writeHead(200)
-    response.write(res_json)
-    response.end()
-  }, 5000)
+    response.setHeader('Content-Type', 'application/json')
+    response.statusCode = 200
+    response.end(res_json)
+  }, delay_ms)
 }).listen(PORT)  
